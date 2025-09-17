@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { useStore } from '../store/useStore'
+import Image from 'next/image'
 
 export default function StudentDetailPage() {
   const params = useParams()
@@ -18,13 +19,14 @@ export default function StudentDetailPage() {
       <h3 className="font-semibold text-lg mt-4">{title}</h3>
       <div className="grid grid-cols-3 gap-2 mt-2">
         {images.map((src, idx) => (
-          <img
-            key={idx}
-            src={src}
-            onClick={() => showImage(src)}
-            className="w-full h-24 object-cover rounded cursor-pointer hover:opacity-80"
-            alt={title}
-          />
+          <div key={idx} className="relative w-full h-24 cursor-pointer" onClick={() => showImage(src)}>
+            <Image
+              src={src}
+              alt={title}
+              fill
+              className="object-cover rounded hover:opacity-80"
+            />
+          </div>
         ))}
       </div>
     </div>
@@ -55,7 +57,7 @@ export default function StudentDetailPage() {
           onClick={hideImage}
           className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 cursor-pointer"
         >
-          <img src={lightbox.src} className="max-h-[90%] max-w-[90%] rounded shadow-lg" alt="Full view"/>
+          <Image src={lightbox.src} alt="Full view" width={800} height={600} className="rounded shadow-lg" />
         </div>
       )}
     </div>
